@@ -52,7 +52,7 @@
         <thead>
             <td>ID</td>
             <td>Description</td>
-            <td>Weight</td>
+            <td>Weight(g)</td>
             <td>Date Added</td>
             <td>Age</td>
         </thead>
@@ -69,7 +69,7 @@
                     <?= item.weight ?>
                 </td>
                 <td>
-                    <?= Utilities.formatDate(item.added, "GMT-5", "M/d/yyyy") ?>
+                    <?= Utilities.formatDate(item.added, timeZone, dateFormat) ?>
                 </td>
                 <td>
                     <?= item.age ?>
