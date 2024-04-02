@@ -21,7 +21,7 @@ const ResponseTypes = {
 function doGet(e) {
   console.info(`HTTP GET request received: ${e}`);
   return createErrorResponse("Invalid request")
-};
+}
 
 function doPost(e) {
   console.info(`HTTP POST request received: ${e}`);
@@ -85,7 +85,7 @@ function doPost(e) {
 
   console.log(responseMsg);
   return createResponse(responseMsg);
-};
+}
 
 function createGenericResponse(responseType, responseMsg, responseData) {
   let content = {
@@ -94,15 +94,15 @@ function createGenericResponse(responseType, responseMsg, responseData) {
       data: responseData || ""
   };
   return ContentService.createTextOutput(JSON.stringify(content)).setMimeType(ContentService.MimeType.JSON); 
-};
+}
 
 function createResponse(responseMsg, responseData) {
   return createGenericResponse(ResponseTypes.OK, responseMsg, responseData);
-};
+}
 
 function createErrorResponse(errorMsg) {
   return createGenericResponse(ResponseTypes.ERROR, errorMsg, null);
-};
+}
 
 function addItem(itemDesc, weight) {
   let inventorySheet = getDataSheet_();
@@ -126,7 +126,7 @@ function addItem(itemDesc, weight) {
   let lastCell = inventorySheet.getRange(lastRow, lastColumn);
   lastCell.setValue("=TODAY()-R[0]C[-1]");
   return newID;
-};
+}
 
 function deleteItem(itemID) {
   let inventorySheet = getDataSheet_();
@@ -146,7 +146,7 @@ function deleteItem(itemID) {
   };
 
   return deleted;
-};
+}
 
 function getItem(itemID) {
   let inventorySheet = getDataSheet_();
@@ -167,7 +167,7 @@ function getItem(itemID) {
 
   // didn't find it
   return null;
-};
+}
 
 function getFirstAvailableID() {
   let inventorySheet = getDataSheet_();
@@ -188,7 +188,7 @@ function getFirstAvailableID() {
 
   console.log(`First available id is ${newID}`);
   return newID;
-};
+}
 
 function sendOldItemDigest() {
   let oldItems = checkForOldItems_(DIGEST_MAX_AGE);
@@ -205,7 +205,7 @@ function sendOldItemDigest() {
       htmlBody: content
     });
   };
-};
+}
 
 function checkForOldItems_(age) {
   let inventorySheet = getDataSheet_();
@@ -231,7 +231,7 @@ function checkForOldItems_(age) {
   };
   console.log(oldItems);
   return oldItems;
-};
+}
 
 function getRequestData_(e, paramName) {
   let value = null;
@@ -248,16 +248,16 @@ function getDataSheet_() {
   return SpreadsheetApp
     .openById(SHEET_ID)
     .getSheetByName("Freezer");
-};
+}
 
 function requestIsValid_(e) {
   // make sure that only trusted users can access this sheet
   let key = getRequestData_(e, "key");
   return key === API_KEY;
-};
+}
 
 function getScriptSecret_(key) {
   let secret = PropertiesService.getScriptProperties().getProperty(key)
   if (!secret) throw Error(`Secret ${key} is empty`)
   return secret
-};
+}
